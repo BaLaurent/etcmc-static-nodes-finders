@@ -6,7 +6,7 @@ Small script to find a list of ETCMC peers that are available and in the specifi
 1) Download the zip containing code (click on code then download zip)
 2) run "setup.bat"
 3) start "run.bat"
-4) place the newly generated "static-nodes.json" in your geth fatnode dir
+4) place the newly generated "config.toml" in your geth install directory (ex: C:\Program Files (x86)\ETCMC ETC NODE LAUNCHER 1920x1080\ETCMC_GUI\ETCMC_GETH )
 5) enjoy ;)
 
 ## Tips
