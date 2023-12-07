@@ -26,13 +26,19 @@ if __name__ == '__main__':
             peerIp = peer["network"]["localAddress"].split(":")[0]
             if (time.time() - last_seen) < 300:
                 if "ETCMC" in peer["name"]:
-                    peerPing = ping(peerIp,unit="ms")
+                    peerPing = ping(peerIp)
                     if peerPing != None:
                         if peerPing < pingThresh:
                             if peer["enode"] not in arrNodes:
                                 arrNodes.append(peer["enode"])
         except Exception as e:
             print(f"Something went wrong : {e}")
-    with open("static-nodes.json", "w") as f:
-        json.dump(arrNodes, f, indent=4)
+    strNodes = '",\n"'.join(arrNodes)
+    with open("original_config.toml","r") as file:
+        data = file.readlines()
+        for i, line in enumerate(data):
+            if "#NODELIST" in line:
+                data[i] = line.replace("#NODELIST",f'[\n"{strNodes}"\n]')
+    with open("config.toml","w") as file:
+        file.writelines(data)
     print(f"Found {len(arrNodes)} nodes.")
