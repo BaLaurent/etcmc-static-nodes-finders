@@ -26,7 +26,7 @@ if __name__ == '__main__':
             peerIp = peer["network"]["localAddress"].split(":")[0]
             if (time.time() - last_seen) < 300:
                 if "ETCMC" in peer["name"]:
-                    peerPing = ping(peerIp)
+                    peerPing = ping(peerIp,unit="ms")
                     if peerPing != None:
                         if peerPing < pingThresh:
                             if peer["enode"] not in arrNodes:
