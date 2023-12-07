@@ -1,0 +1,39 @@
+# Ethereum Classic Node Configuration
+
+[Eth]
+# Network ID for Ethereum Classic
+NetworkId = 61
+# Sync mode (snap is faster for initial sync)
+SyncMode = "snap"
+# Other optimization parameters
+NoPruning = false
+NoPrefetch = false
+LightPeers = 50
+UltraLightFraction = 75
+# Cache size for database in MB
+DatabaseCache = 512
+
+[Node]
+# Data directory for the Ethereum node data
+DataDir = "C:\\Program Files (x86)\\ETCMC ETC NODE LAUNCHER 1920x1080\\ETCMC_GUI\\ETCMC_GETH\\gethDataDirFastNode"
+# Path to IPC file for inter-process communication
+IPCPath = "geth.ipc"
+# HTTP configurations for the node
+HTTPHost = "localhost"
+HTTPPort = 8547
+HTTPCors = ["*"]
+HTTPVirtualHosts = ["localhost"]
+# Websocket configurations
+WSHost = "localhost"
+WSPort = 8546
+
+[Node.P2P]
+# Peer-to-peer configurations
+MaxPeers = 50
+NoDiscovery = false
+
+# Add your bootstrap nodes here
+BootstrapNodes = #NODELIST
+
+# Add your static nodes here
+StaticNodes = #NODELIST
