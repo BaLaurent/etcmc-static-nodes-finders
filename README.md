@@ -3,7 +3,7 @@ Small script to find a list of ETCMC peers that are available and in the specifi
 
 ## Installation
 0) Install python 3.11 from microsoft store
-1) Download the zip containing the 3 files "setup.bat" "run.bat" and "main.py"
+1) Download the zip containing code (click on code then download zip)
 2) run "setup.bat"
 3) start "run.bat"
 4) place the newly generated "static-nodes.json" in your geth fatnode dir
