@@ -7,6 +7,7 @@ Small script to find a list of ETCMC peers that are available and in the specifi
 2) run "setup.bat"
 3) start "run.bat"
 4) place the newly generated "config.toml" in your geth install directory (ex: C:\Program Files (x86)\ETCMC ETC NODE LAUNCHER 1920x1080\ETCMC_GUI\ETCMC_GETH )
+I copied my path but it can be different for you the important part is ETCMC_GUI\ETCMC_GETH
 5) enjoy ;)
 
 ## Tips
