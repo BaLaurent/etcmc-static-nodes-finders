@@ -4,6 +4,7 @@ from ping3 import ping
 import time
 import shutil
 import os
+import re
 
 if __name__ == '__main__':
     # Load the data
@@ -14,11 +15,9 @@ if __name__ == '__main__':
     maxPeerAmt = int(input("Enter the number of peers you want:"))
     countryCode = input("If you want to filter by country code enter it (leave empty for only ping) :")
     if config["batEdited"] == False:
-        installPath = input("Enter the path to the etcnodes folder (leave empty for default):")
-        if installPath == "":
-            installPath = config["installPath"]
-        else:
-            config["installPath"] = installPath
+        installPath = input("Enter the path to the etcnodes folder (leave empty for default):") or config["installPath"]
+        config["installPath"] = installPath
+
         with open("START_GETH_FAST_NODE.bat") as f:
             lines = f.readlines()
         configPathInBat = False
@@ -67,6 +66,8 @@ if __name__ == '__main__':
         for i, line in enumerate(data):
             if "#NODELIST" in line:
                 data[i] = line.replace("#NODELIST",f'[\n"{strNodes}"\n]')
+            if "#DATADIR" in line:
+                data[i] = line.replace("#DATADIR", '"{}"'.format(re.escape(config["installPath"])))
     with open("config.toml","w") as file:
         file.writelines(data)
     print(f"Found {len(arrNodes)} nodes.")
