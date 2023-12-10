@@ -8,8 +8,8 @@ Small script to find a list of ETCMC peers that are available and in the specifi
 3) right click in the folder where the .py is located,
 4) then open a terminal
 5) in this terminal type `python main.py`
-6) place the newly generated "config.toml" in your geth install directory (ex: C:\Program Files (x86)\ETCMC ETC NODE LAUNCHER 1920x1080\ETCMC_GUI\ETCMC_GETH )
-I copied my path but it can be different for you the important part is ETCMC_GUI\ETCMC_GETH
+6) Whe you're asked for the install folder if you have the node soft in this folder : "C:\Program Files (x86)\ETCMC ETC NODE LAUNCHER 1920x1080\ETCMC_GUI\ETCMC_GETH"
+then you don't need to enter a thing (just press enter)
 7) enjoy ;)
 
 ## Support
