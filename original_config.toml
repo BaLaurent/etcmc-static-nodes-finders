@@ -15,7 +15,7 @@ DatabaseCache = 512
 
 [Node]
 # Data directory for the Ethereum node data
-DataDir = "C:\\Program Files (x86)\\ETCMC ETC NODE LAUNCHER 1920x1080\\ETCMC_GUI\\ETCMC_GETH\\gethDataDirFastNode"
+DataDir = #DATADIR
 # Path to IPC file for inter-process communication
 IPCPath = "geth.ipc"
 # HTTP configurations for the node

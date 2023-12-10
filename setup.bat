@@ -1,1 +1,1 @@
-pip install requests ping3
+pip install -r requirements.txt
