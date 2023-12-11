@@ -14,11 +14,13 @@ if __name__ == '__main__':
     maxPeerAmt = int(input("Enter the number of peers you want:"))
     countryCode = input("If you want to filter by country code enter it (leave empty for only ping) :")
     if config["batEdited"] == False:
-        installPath = input("Enter the path to the etcnodes folder (leave empty for default):")
-        if installPath == "":
-            installPath = config["installPath"]
-        else:
-            config["installPath"] = installPath
+        installPath = ""
+        while installPath == "":
+            installPath = input("Enter the path to the etcnodes folder (leave empty for default):")
+            if installPath == "":
+                installPath = config["installPath"]
+            else:
+                config["installPath"] = installPath
         with open("START_GETH_FAST_NODE.bat") as f:
             lines = f.readlines()
         configPathInBat = False
