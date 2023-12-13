@@ -8,8 +8,20 @@ import os
 if __name__ == '__main__':
     # Load the data
     arrNodes = []
-    with open("config.json","r") as file:
-        config = json.load(file)
+    scoreThresh = int(input("Enter the score threshold:"))
+    responseNodesAllJson = requests.get('https://github.com/etclabscore/discv4-dns-lists/blob/etccore/snap.classic.blockd.info/nodes.all.json')
+    nodes = json.loads("".join(responseNodesAllJson.json()["payload"]["blob"]["rawLines"]))
+    with open("nodes.all.json","w") as file:
+        json.dump(nodes,file,indent=4)
+    arrScoreOver = []
+    for node in nodes:
+        try:
+            if nodes[node]["score"] >= scoreThresh:
+                arrScoreOver.append(node)
+        except:
+            pass
+    with open("config.json","r") as fileConfig:
+        config = json.load(fileConfig)
     pingThresh = int(input("Enter the ping threshold (ms):"))
     maxPeerAmt = int(input("Enter the number of peers you want:"))
     countryCode = input("If you want to filter by country code enter it (leave empty for only ping) :")
@@ -41,26 +53,27 @@ if __name__ == '__main__':
             json.dump(config,file)
     response = requests.get('https://api.etcnodes.org/peers')
     peers = response.json()
-    arrPings = []
-    arrIps = []
-    arrEnodeIps = {}
     for peer in peers:
         try:
             if len(arrNodes) >= maxPeerAmt:
                 break
-            if countryCode != "":
-                if peer["ip_info"]["countryCode"] != countryCode.upper():
-                    print(f"skipped {peer['network']['localAddress']}")
-                    continue
-            last_seen = peer['contact']["last"]["unix"]
-            peerIp = peer["network"]["localAddress"].split(":")[0]
-            if (time.time() - last_seen) < 300:
-                if "ETCMC" in peer["name"]:
-                    peerPing = ping(peerIp)
-                    if peerPing != None:
-                        if peerPing < pingThresh:
-                            if peer["enode"] not in arrNodes:
-                                arrNodes.append(peer["enode"])
+            if peer["id"] in arrScoreOver:
+                if countryCode != "":
+                    if peer["ip_info"]["countryCode"] != countryCode.upper():
+                        print(f"skipped {peer['network']['localAddress']}")
+                        continue
+                last_seen = peer['contact']["last"]["unix"]
+                peerIp = peer["network"]["localAddress"].split(":")[0]
+                peerPort = peer["network"]["localAddress"].split(":")[1]
+                if peerPort[:2] == "30":
+                    if peer["network"]["inbound"] == True:
+                        if (time.time() - last_seen) < 300:
+                            if peer["protocols"]["eth"]["version"] == 67 and peer["protocols"]["eth"]["forkId"]["hash"] == "0x7fd1bb25":
+                                peerPing = ping(peerIp)
+                                if peerPing != None:
+                                    if peerPing < pingThresh:
+                                        if peer["enode"] not in arrNodes:
+                                            arrNodes.append(peer["enode"])
         except Exception as e:
             print(f"Something went wrong : {e}")
     strNodes = '",\n"'.join(arrNodes)
@@ -68,7 +81,7 @@ if __name__ == '__main__':
         data = file.readlines()
         for i, line in enumerate(data):
             if "#NODELIST" in line:
-                data[i] = line.replace("#NODELIST",f'[\n"{strNodes}"\n]')
+                data[i] = line.replace("#NODELIST",f'[\n"{strNodes}"\n]\n#{len(arrNodes)} nodes\n')
     with open("config.toml","w") as file:
         file.writelines(data)
     print(f"Found {len(arrNodes)} nodes.")
