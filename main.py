@@ -65,7 +65,7 @@ if __name__ == '__main__':
                 last_seen = peer['contact']["last"]["unix"]
                 peerIp = peer["network"]["localAddress"].split(":")[0]
                 peerPort = peer["network"]["localAddress"].split(":")[1]
-                if peerPort[:2] == "30":
+                if peerPort[:3] == "303":
                     if peer["network"]["inbound"] == True:
                         if (time.time() - last_seen) < 300:
                             if peer["protocols"]["eth"]["version"] == 67 and peer["protocols"]["eth"]["forkId"]["hash"] == "0x7fd1bb25":
